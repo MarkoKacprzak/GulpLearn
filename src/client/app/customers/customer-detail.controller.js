@@ -5,9 +5,9 @@
     angular
         .module('app.customers')
         .controller('CustomerDetail', CustomerDetail);
-/* jshint -W033, -W117 */
+    
     function foo() {
-        var y = 2;
+        var y = 2
         x = 1
     }
     CustomerDetail.$inject = ['$stateParams', '$window', 'dataservice', 'logger'];
