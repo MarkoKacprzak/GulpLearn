@@ -2,7 +2,7 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
 var config = require('./gulp.config')();
-
+var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 //var jshint = require('gulp-jshint');
@@ -47,5 +47,12 @@ gulp.task('styles', function () {
         .pipe($.less())
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('clean-styles', function () {
+    'use strict';
+    log('Clean files');
+    var files = config.temp + '**/*.css';
+    del(files);
 });
 
