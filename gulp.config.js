@@ -1,15 +1,18 @@
 /*global module*/
 module.exports = function () {
     'use strict';
+    var client = './src/client/';
     var config = {
         
-        // all js to vet
+        /*
+         * Files path
+         */
         alljs: [
             './src/**/*.js',
             './*.js'
         ],
         temp: './.tmp',
-        less: './src/client/styles/styles.less'
+        less: client + 'styles/styles.less'
     };
     
     return config;
