@@ -1,0 +1,25 @@
+{
+  "name": "NaukaGulpa",
+  "version": "1.0.0",
+  "description": "Testowanie gulpa",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "gulp"
+  ],
+  "author": "Marek Kacprzak",
+  "license": "Open source",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0"
+  },
+  "dependencies": {
+    "bower": "^1.7.7"
+  }
+}
