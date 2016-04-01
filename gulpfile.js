@@ -4,6 +4,8 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var util = require('gulp-util');
 var gulpprint = require('gulp-print');
+var gulpif = require('gulp-if');
+var args = require('yargs').argv;
 
 function log(msg) {
     'use strict';
@@ -18,15 +20,16 @@ function log(msg) {
         util.log(util.colors.green(msg));
     }
 }
-
+//gulp vet --verbose
 gulp.task('vet', function () {
     'use strict';
     log('asdasds');
+    
     return gulp.src([
         './src/**/*.js',
         './*.js'
     ])
-        .pipe(gulpprint())
+        .pipe(gulpif(args.verbose, gulpprint()))
         .pipe(jscs())
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish', {verbose: true}))
