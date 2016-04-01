@@ -1,16 +1,21 @@
 {
   "name": "NaukaGulpa",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Testowanie gulpa",
   "main": "index.html",
   "scripts": {
-    "test": "test"
+     "init": "npm install"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/MarkoKacprzak/GulpLearn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkoKacprzak/GulpLearn.git"
   },
   "keywords": [
     "gulp"
   ],
   "author": "Marek Kacprzak",
-  "license": "Open source",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-jscs": "^3.0.2",
@@ -21,5 +26,6 @@
   },
   "dependencies": {
     "bower": "^1.7.7"
-  }
+  },
+  "readme": "README.md"
 }
