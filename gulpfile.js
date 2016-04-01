@@ -49,10 +49,16 @@ gulp.task('styles', function () {
         .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('clean-styles', function () {
+function clean(path, done) {
+    'use strict';
+    log('Cleaning: ' + $.util.colors.blue(path));
+    del(path, done);
+}
+
+gulp.task('clean-styles', function (done) {
     'use strict';
     log('Clean files');
     var files = config.temp + '**/*.css';
-    del(files);
+    clean(files, done);
 });
 
