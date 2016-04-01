@@ -38,7 +38,7 @@ gulp.task('vet', function () {
         .pipe($.jshint.reporter('fail'));
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', ['clean-styles'], function () {
     'use strict';
     log('Compile Less --->CSS');
     
@@ -52,7 +52,7 @@ gulp.task('styles', function () {
 function clean(path, done) {
     'use strict';
     log('Cleaning: ' + $.util.colors.blue(path));
-    del(path, done);
+    del(path).then(done());
 }
 
 gulp.task('clean-styles', function (done) {
@@ -62,3 +62,7 @@ gulp.task('clean-styles', function (done) {
     clean(files, done);
 });
 
+gulp.task('less-watcher', function () {
+    'use strict';
+    gulp.watch([config.less], ['styles']);
+});

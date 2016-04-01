@@ -11,7 +11,7 @@ module.exports = function () {
             './src/**/*.js',
             './*.js'
         ],
-        temp: './.tmp',
+        temp: './.tmp/',
         less: client + 'styles/styles.less'
     };
     
