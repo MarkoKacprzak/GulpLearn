@@ -38,14 +38,6 @@ gulp.task('vet', function () {
         .pipe($.jshint.reporter('fail'));
 });
 
-function errorLogger(error) {
-    log('Start of Error');
-    log(error);
-    log('End of Error');
-    this.emit('end');
-}
-
-
 gulp.task('styles', ['clean-styles'], function () {
     'use strict';
     log('Compile Less --->CSS');
