@@ -52,8 +52,8 @@ gulp.task('styles', ['clean-styles'], function () {
     
     return gulp
         .src(config.less) //TODO
+        .pipe($.plumber())
         .pipe($.less())
-        .on('error', errorLogger)
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
 });
