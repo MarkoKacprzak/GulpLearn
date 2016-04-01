@@ -7,7 +7,9 @@ module.exports = function () {
         alljs: [
             './src/**/*.js',
             './*.js'
-        ]
+        ],
+        temp: './.tmp',
+        less: './src/client/styles/styles.less'
     };
     
     return config;
