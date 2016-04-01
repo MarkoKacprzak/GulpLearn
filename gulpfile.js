@@ -38,6 +38,14 @@ gulp.task('vet', function () {
         .pipe($.jshint.reporter('fail'));
 });
 
+function errorLogger(error) {
+    log('Start of Error');
+    log(error);
+    log('End of Error');
+    this.emit('end');
+}
+
+
 gulp.task('styles', ['clean-styles'], function () {
     'use strict';
     log('Compile Less --->CSS');
@@ -45,6 +53,7 @@ gulp.task('styles', ['clean-styles'], function () {
     return gulp
         .src(config.less) //TODO
         .pipe($.less())
+        .on('error', errorLogger)
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
 });
