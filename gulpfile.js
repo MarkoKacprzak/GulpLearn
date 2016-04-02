@@ -28,7 +28,6 @@ function log(msg) {
 gulp.task('vet', function () {
     'use strict';
     log('Analyzing source with JSHint and JSCS');
-    
     return gulp
         .src(config.alljs)
         .pipe($.if(args.verbose, $.print()))
@@ -41,7 +40,6 @@ gulp.task('vet', function () {
 gulp.task('styles', ['clean-styles'], function () {
     'use strict';
     log('Compile Less --->CSS');
-    
     return gulp
         .src(config.less) //TODO
         .pipe($.plumber())
