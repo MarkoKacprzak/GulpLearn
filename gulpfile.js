@@ -66,3 +66,14 @@ gulp.task('less-watcher', function () {
     'use strict';
     gulp.watch([config.less], ['styles']);
 });
+
+gulp.task('wiredep', function () {
+    'use strict';
+    var options = config.getWiredepDefaultOptions(),
+        wiredep = require('wiredep').stream;
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(options))
+        .pipe($.inject(gulp.src(config.js)))
+        .pipe(gulp.dest(config.client));
+});
