@@ -1,10 +1,10 @@
 /*global module,require*/
 module.exports = function () {
     'use strict';
-    var client = './src/client/',
+    var client = 'src/client/',
         clientApp = client + 'app/',
-        server = './src/server/',
-        temp = './.tmp/',
+        server = 'src/server/',
+        temp = '.tmp/',
         config = {
             /*
             ** Files path
@@ -28,7 +28,7 @@ module.exports = function () {
              */
             bower: {
                 json: require('./bower.json'),
-                directory: './bower_components/',
+                directory: 'bower_components/',
                 ignorePath: '../..'
             },
             css: temp + 'styles.css',

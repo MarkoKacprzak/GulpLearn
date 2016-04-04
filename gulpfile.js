@@ -1,6 +1,7 @@
-/*global require*/
+/*global require,process*/
 var gulp = require('gulp');
 var args = require('yargs').argv;
+var browserSync = require('browser-sync');
 var config = require('./gulp.config')();
 var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
@@ -89,18 +90,56 @@ gulp.task('inject', ['wiredep', 'styles'], function () {
         .pipe(gulp.dest(config.client));
 });
 
+function changeEvent(event) {
+    'use strict';
+    var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
+    log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
+}
+
+function startBrowserSync() {
+    'use strict';
+    if (browserSync.active) {
+        return;
+    }
+    log('Starting browser-sync on port' + port);
+    gulp.watch([config.less], ['styles'])
+        .on('change', function (event) { changeEvent(event); });
+    var options = {
+        proxy: 'localhost:' + port,
+        port: 3000,
+        files: [
+            config.client + '**/*.*',
+            '!' + config.less,
+            config.temp + '**/*.css'
+        ],
+        ghostMode: {
+            clicks: true,
+            location: false,
+            forms: true,
+            scroll: true
+        },
+        injectChanges: true,
+        logFileChanges: true,
+        logLevel: 'debug',
+        logPrefix: 'gulp-patterns',
+        notify: true,
+        reloadDelay: 0
+    };
+    browserSync(options);
+}
+
 gulp.task('serve-dev', ['inject'], function () {
     'use strict';
-    var isDev = true;
-    var nodeOptions = {
-        script: config.nodeServer,
-        delaytime: 1,
-        env: {
-            'PORT': port,
-            'NODE_ENV': isDev ? 'dev' : 'build'
-        } ,
-        watch: [config.server]
-    };
+    var isDev = true,
+        nodeOptions = {
+            script: config.nodeServer,
+            delaytime: 1,
+            env: {
+                'PORT': port,
+                'NODE_ENV': isDev ? 'dev' : 'build'
+            },
+            watch: [config.server]
+        };
     return $.nodemon(nodeOptions)
         .on('restart', ['vet'], function (ev) {
             log('*** nodemon restarted');
@@ -108,6 +147,7 @@ gulp.task('serve-dev', ['inject'], function () {
         })
         .on('start', function () {
             log('*** nodemon started');
+            startBrowserSync();
         })
         .on('crash', function () {
             log('*** nodemon crash');
