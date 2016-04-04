@@ -4,7 +4,7 @@ var args = require('yargs').argv;
 var config = require('./gulp.config')();
 var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
-
+var gulpif = require('gulp-if');
 //var jshint = require('gulp-jshint');
 //var jscs = require('gulp-jscs');
 //var util = require('gulp-util');
@@ -30,7 +30,8 @@ gulp.task('vet', function () {
     log('Analyzing source with JSHint and JSCS');
     return gulp
         .src(config.alljs)
-        .pipe($.if(args.verbose, $.print()))
+    /* jshint -W024, -W001, -W003, -W030, -W034  */
+        .pipe(gulpif(args.verbose, $.print()))
         .pipe($.jscs())
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
