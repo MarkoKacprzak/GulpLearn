@@ -3,6 +3,7 @@ module.exports = function () {
     'use strict';
     var client = './src/client/',
         clientApp = client + 'app/',
+        temp = './.tmp/',
         config = {
             /*
             ** Files path
@@ -18,7 +19,7 @@ module.exports = function () {
                 clientApp + '**/*.js',
                 '!' + clientApp + '**/*.spec.js'
             ],
-            temp: './.tmp/',
+            temp: temp,
             less: client + 'styles/styles.less',
             /**
              * Bowe and NPM location
@@ -27,7 +28,8 @@ module.exports = function () {
                 json: require('./bower.json'),
                 directory: './bower_components/',
                 ignorePath: '../..'
-            }
+            },
+            css: temp + 'styles.css'
         };
     config.getWiredepDefaultOptions = function () {
         var options = {
