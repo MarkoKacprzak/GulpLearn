@@ -10,6 +10,7 @@ var gulpif = require('gulp-if');
 //var util = require('gulp-util');
 //var gulpprint = require('gulp-print');
 //var gulpif = require('gulp-if');
+var port = process.env.PORT || config.defaultPort;
 
 function log(msg) {
     'use strict';
@@ -86,4 +87,19 @@ gulp.task('inject', ['wiredep', 'styles'], function () {
         .src(config.index)
         .pipe($.inject(gulp.src(config.css)))
         .pipe(gulp.dest(config.client));
+});
+
+gulp.task('serve-dev', ['inject'], function () {
+    'use strict';
+    var isDev = true;
+    var nodeOptions = {
+        script: config.nodeServer,
+        delaytime: 1,
+        env: {
+            'PORT': port,
+            'NODE_ENV': isDev ? 'dev' : 'build'
+        } ,
+        watch: [config.server]
+    };
+    return $.nodemon(nodeOptions);
 });
