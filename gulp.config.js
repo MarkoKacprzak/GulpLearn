@@ -4,10 +4,9 @@ module.exports = function () {
     var client = './src/client/',
         clientApp = client + 'app/',
         config = {
-        
-        /*
-         * Files path
-         */
+            /*
+            ** Files path
+            */
             alljs: [
                 './src/**/*.js',
                 './*.js'
@@ -29,8 +28,6 @@ module.exports = function () {
                 directory: './bower_components/',
                 ignorePath: '../..'
             }
-             
-            
         };
     config.getWiredepDefaultOptions = function () {
         var options = {
