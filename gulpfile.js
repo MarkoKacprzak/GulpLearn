@@ -54,7 +54,7 @@ gulp.task('styles', ['clean-styles'], function () {
         .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('fonts', function () {
+gulp.task('fonts', ['clean-fonts'], function () {
     'use strict';
     log('Copying fonts');
     return gulp
@@ -62,7 +62,7 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest(config.build + 'fonts'));
 });
 
-gulp.task('images', function () {
+gulp.task('images', ['clean-images'], function () {
     'use strict';
     log('Copying and compressing the images');
     return gulp
@@ -77,11 +77,26 @@ function clean(path, done) {
     del(path).then(done());
 }
 
+gulp.task('clean', function (done) {
+    'use strict';
+    var delconfig = [].concat(config.build, config.temp);
+    log('Cleaning: ' + $.util.colors.blue(delconfig));
+    del(delconfig, done);
+});
+
+gulp.task('clean-fonts', function (done) {
+    'use strict';
+    clean(config.build + 'fonts/**/*.*', done);
+});
+
+gulp.task('clean-images', function (done) {
+    'use strict';
+    clean(config.build + 'images/**/*.*', done);
+});
+
 gulp.task('clean-styles', function (done) {
     'use strict';
-    log('Clean files');
-    var files = config.temp + '**/*.css';
-    clean(files, done);
+    clean(config.temp + '**/*.css', done);
 });
 
 gulp.task('less-watcher', function () {
