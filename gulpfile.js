@@ -157,22 +157,27 @@ function changeEvent(event) {
     log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
 }
 
-function startBrowserSync() {
+function startBrowserSync(isDev) {
     'use strict';
     if (args.nosync || browserSync.active) {
         return;
     }
     log('Starting browser-sync on port' + port);
-    gulp.watch([config.less], ['styles'])
-        .on('change', function (event) { changeEvent(event); });
+    if (isDev) {
+        gulp.watch([config.less], ['styles'])
+            .on('change', function (event) { changeEvent(event); });
+    } else {
+        gulp.watch([config.less, config.js, config.html], ['optimize', browserSync.reload])
+            .on('change', function (event) { changeEvent(event); });
+    }
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
-        files: [
+        files: isDev ? [
             config.client + '**/*.*',
             '!' + config.less,
             config.temp + '**/*.css'
-        ],
+        ] : [],
         ghostMode: {
             clicks: true,
             location: false,
@@ -204,10 +209,9 @@ gulp.task('optimize', ['inject'], function () {
         .pipe(gulp.dest(config.build));
 });
 
-gulp.task('serve-dev', ['inject'], function () {
+function serve(isDev) {
     'use strict';
-    var isDev = true,
-        nodeOptions = {
+    var nodeOptions = {
             script: config.nodeServer,
             delaytime: 1,
             env: {
@@ -227,7 +231,7 @@ gulp.task('serve-dev', ['inject'], function () {
         })
         .on('start', function () {
             log('*** nodemon started');
-            startBrowserSync();
+            startBrowserSync(isDev);
         })
         .on('crash', function () {
             log('*** nodemon crash');
@@ -235,4 +239,14 @@ gulp.task('serve-dev', ['inject'], function () {
         .on('exit', function () {
             log('*** nodemon exit cleanly');
         });
+}
+
+gulp.task('serve-build', ['optimize'], function () {
+    'use strict';
+    serve(false);
+});
+
+gulp.task('serve-dev', ['inject'], function () {
+    'use strict';
+    serve(true);
 });
