@@ -142,7 +142,7 @@ gulp.task('wiredep', function () {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('inject', ['wiredep', 'styles'], function () {
+gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function () {
     'use strict';
     log('Wire up the app css into html and call wiredep');
     return gulp
@@ -188,6 +188,20 @@ function startBrowserSync() {
     };
     browserSync(options);
 }
+
+gulp.task('optimize', ['inject'], function () {
+    'use strict';
+    log('Optimizing the javascript, css, html');
+    var templateCache = config.temp + config.templateCache.file;
+    log(templateCache);
+    return gulp
+        .src(config.index)
+        .pipe($.plumber())
+        .pipe($.inject(gulp.src(templateCache, {read: false}), {
+            starttag: '<!-- inject:templates:js -->'
+        }))
+        .pipe(gulp.dest(config.build));
+});
 
 gulp.task('serve-dev', ['inject'], function () {
     'use strict';
