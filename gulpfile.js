@@ -200,6 +200,7 @@ gulp.task('optimize', ['inject'], function () {
         .pipe($.inject(gulp.src(templateCache, {read: false}), {
             starttag: '<!-- inject:templates:js -->'
         }))
+        .pipe($.useref({searchPath: './'}))
         .pipe(gulp.dest(config.build));
 });
 
