@@ -207,7 +207,9 @@ gulp.task('optimize', ['inject', 'fonts', 'images'], function () {
             starttag: '<!-- inject:templates:js -->'
         }))
         .pipe($.useref({searchPath: './'}))
-        .pipe(gulpif('**/*.js', $.uglify()))
+        .pipe(gulpif('**/lib.js', $.uglify()))
+        .pipe(gulpif('**/app.js', $.ngAnnotate()))
+        .pipe(gulpif('**/app.js', $.uglify()))
         .pipe(gulpif('**/*.css', $.csso()))
         .pipe(gulp.dest(config.build));
 });
