@@ -1,6 +1,10 @@
 /*jshint node:true*/
 'use strict';
 
+// Load any undefined ENV variables from a specified file.
+var env = require('node-env-file');
+env(__dirname + '../../../.env');
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
