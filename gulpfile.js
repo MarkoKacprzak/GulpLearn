@@ -197,7 +197,8 @@ function startBrowserSync(isDev) {
 gulp.task('optimize', ['inject'], function () {
     'use strict';
     log('Optimizing the javascript, css, html');
-    var templateCache = config.temp + config.templateCache.file;
+    var templateCache = config.temp + config.templateCache.file,
+        cssFilter = $.filter('**/*.css');
     log(templateCache);
     return gulp
         .src(config.index)
@@ -206,6 +207,8 @@ gulp.task('optimize', ['inject'], function () {
             starttag: '<!-- inject:templates:js -->'
         }))
         .pipe($.useref({searchPath: './'}))
+        .pipe(gulpif('**/*.js', $.uglify()))
+        .pipe(gulpif('**/*.css', $.csso()))
         .pipe(gulp.dest(config.build));
 });
 
