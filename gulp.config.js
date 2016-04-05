@@ -15,6 +15,7 @@ module.exports = function () {
             ],
             build: 'build/',
             fonts: 'bower_components/font-awesome/fonts/**/*.*',
+            htmltemplates: clientApp + '**/*.html',
             images: client + 'images/**/*.*',
             client: client,
             index: client + 'index.html',
@@ -40,6 +41,20 @@ module.exports = function () {
              */
             defaultPort: 7203,
             nodeServer: './src/server/app.js',
+            /**
+             * template cache
+             */
+            templateCache: {
+                file: 'templates.js',
+                options: {
+                    module: 'app.core',
+                    standAlone: false,
+                    root: 'app/'
+                }
+            },
+            /**
+             * browser sync
+             */
             browserReloadDelay: 1000
         };
     config.getWiredepDefaultOptions = function () {

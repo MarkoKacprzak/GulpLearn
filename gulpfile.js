@@ -114,6 +114,22 @@ gulp.task('less-watcher', function () {
     gulp.watch([config.less], ['styles']);
 });
 
+gulp.task('templatecache', ['clean-code'], function () {
+    'use strict';
+    log('Creating AngularJS $templateCache');
+    var options = config.getWiredepDefaultOptions(),
+        wiredep = require('wiredep').stream;
+    return gulp
+        .src(config.htmltemplates)
+        .pipe($.minifyHtml({empty: true}))
+        //gulp-angular-templatecache
+        .pipe($.angularTemplatecache(
+            config.templateCache.file,
+            config.templateCache.options
+        ))
+        .pipe(gulp.dest(config.temp));
+});
+
 gulp.task('wiredep', function () {
     'use strict';
     log('Wire up bower css js and app js into html');
