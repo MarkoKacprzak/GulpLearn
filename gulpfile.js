@@ -99,6 +99,16 @@ gulp.task('clean-styles', function (done) {
     clean(config.temp + '**/*.css', done);
 });
 
+gulp.task('clean-code', function (done) {
+    'use strict';
+    var files = [].concat(
+        config.temp + '**/*.js',
+        config.build + '**/*.html',
+        config.build + 'js/**/*.js'
+    );
+    clean(files, done);
+});
+
 gulp.task('less-watcher', function () {
     'use strict';
     gulp.watch([config.less], ['styles']);
