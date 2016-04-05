@@ -26,6 +26,9 @@ function log(msg) {
         $.util.log($.util.colors.green(msg));
     }
 }
+gulp.task('help', $.taskListing);
+
+gulp.task('default', ['help']);
 //gulp vet --verbose
 gulp.task('vet', function () {
     'use strict';
@@ -49,6 +52,23 @@ gulp.task('styles', ['clean-styles'], function () {
         .pipe($.less())
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('fonts', function () {
+    'use strict';
+    log('Copying fonts');
+    return gulp
+        .src(config.fonts)
+        .pipe(gulp.dest(config.build + 'fonts'));
+});
+
+gulp.task('images', function () {
+    'use strict';
+    log('Copying and compressing the images');
+    return gulp
+        .src(config.images)
+        .pipe($.imagemin({optimizationLevel: 4}))
+        .pipe(gulp.dest(config.build + 'images'));
 });
 
 function clean(path, done) {
