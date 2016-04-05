@@ -194,7 +194,7 @@ function startBrowserSync(isDev) {
     browserSync(options);
 }
 
-gulp.task('optimize', ['inject'], function () {
+gulp.task('optimize', ['inject', 'fonts', 'images'], function () {
     'use strict';
     log('Optimizing the javascript, css, html');
     var templateCache = config.temp + config.templateCache.file,
