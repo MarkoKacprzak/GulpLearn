@@ -3,7 +3,7 @@
 
 // Load any undefined ENV variables from a specified file.
 var env = require('node-env-file');
-env(__dirname + '../../../.env');
+env(__dirname + '../../.env', { overwrite: true, raise: false });
 
 var express = require('express');
 var app = express();
@@ -57,6 +57,6 @@ switch (environment) {
 app.listen(port, function() {
     console.log('Express server listening on port ' + port);
     console.log('env = ' + app.get('env') +
-                '\n__dirname = ' + __dirname +
-                '\nprocess.cwd = ' + process.cwd());
+        '\n__dirname = ' + __dirname +
+        '\nprocess.cwd = ' + process.cwd());
 });
